@@ -1,13 +1,13 @@
 # Quality-Movie-Data-Analysis-Project
 ***
 ## Project Overview
-This project is an overview of an Weather Data Analysis Pipeline that extracts the weather data live from the weather APIs and load it into the Readshift after reuired transformation.
-Process and Ingest only quality movies in Redshift Dara Warehouse using tech stack like S3, Glue Crawler, Glue Catalog, Glue Catalog Data Quality, Glue Low Code ETL, Redshift, Event Bridge, SNS, Step Functions etc
+This project is an overview of a Quality Movies Data Analysis Pipeline that takes the imbd movies data from S3 and perform qualaity check and based on that bad records stored in a specific S3 folder for review and Passed data load in Redshift Dara Warehouse for futher analysis.
+Tech stacks used like S3, Glue Crawler, Glue Catalog, Glue Catalog Data Quality, Glue Low Code ETL, Redshift, Event Bridge, SNS, Step Functions etc
 
 ***
 
 ## Architectural Diagram
-![Weather-Data-Analysis](https://github.com/yash872/Airline-Data-Ingestion-Project/blob/main/Images/Weather-Data-Analysis.jpg)
+![Quality-Movies-Data-Analysis-Project](https://github.com/yash872/Airline-Data-Ingestion-Project/blob/main/Images/Quality-Movies-Data-Analysis-Project.jpg)
 
 ***
 

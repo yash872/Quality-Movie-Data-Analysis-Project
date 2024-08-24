@@ -1,0 +1,83 @@
+{
+    "Comment": "A description of my state machine",
+    "StartAt": "StartCrawler",
+    "States": {
+      "StartCrawler": {
+        "Type": "Task",
+        "Parameters": {
+          "Name": "crawl-movies-data-s3"
+        },
+        "Resource": "arn:aws:states:::aws-sdk:glue:startCrawler",
+        "Next": "GetCrawler"
+      },
+      "GetCrawler": {
+        "Type": "Task",
+        "Parameters": {
+          "Name": "crawl-movies-data-s3"
+        },
+        "Resource": "arn:aws:states:::aws-sdk:glue:getCrawler",
+        "Next": "Is_Running?"
+      },
+      "Is_Running?": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.Crawler.State",
+            "StringMatches": "RUNNING",
+            "Next": "Wait"
+          }
+        ],
+        "Default": "Glue StartJobRun"
+      },
+      "Wait": {
+        "Type": "Wait",
+        "Seconds": 5,
+        "Next": "GetCrawler"
+      },
+      "Glue StartJobRun": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::glue:startJobRun.sync",
+        "Parameters": {
+          "JobName": "Movies-Data-Analysis"
+        },
+        "Next": "Glue_Job_Status",
+        "Catch": [
+          {
+            "ErrorEquals": [
+              "States.TaskFailed"
+            ],
+            "Next": "Failed_Notification"
+          }
+        ]
+      },
+      "Glue_Job_Status": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.JobRunState",
+            "StringMatches": "SUCCEEDED",
+            "Next": "Success_Notification"
+          }
+        ],
+        "Default": "Failed_Notification"
+      },
+      "Success_Notification": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::sns:publish",
+        "Parameters": {
+          "Message.$": "$",
+          "TopicArn": "arn:aws:sns:us-east-1:010526265053:glue-job-notification"
+        },
+        "End": true
+      },
+      "Failed_Notification": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::sns:publish",
+        "Parameters": {
+          "TopicArn": "arn:aws:sns:us-east-1:010526265053:glue-job-notification",
+          "Message": "Glue Job Failed !!"
+        },
+        "End": true
+      }
+    }
+  }
