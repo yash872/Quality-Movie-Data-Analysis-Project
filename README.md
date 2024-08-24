@@ -7,7 +7,7 @@ Tech stacks used like S3, Glue Crawler, Glue Catalog, Glue Catalog Data Quality,
 ***
 
 ## Architectural Diagram
-![Quality-Movies-Data-Analysis-Project](https://github.com/yash872/Airline-Data-Ingestion-Project/blob/main/Images/Quality-Movies-Data-Analysis-Project.jpg)
+![Quality-Movies-Data-Analysis-Project](https://github.com/yash872/Quality-Movie-Data-Analysis-Project/blob/main/Images/Quality-Movies-Data-Analysis-Project.jpg)
 
 ***
 
